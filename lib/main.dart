@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     // TODO: implement build
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: SplashScreen(),
     );
   }}
