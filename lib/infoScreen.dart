@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -22,7 +23,7 @@ class _InfoState extends State<InfoScreen> {
   }
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: Column(
+        body: ListView(
           children: [
             Stack(
               overflow: Overflow.visible,
@@ -60,18 +61,24 @@ class _InfoState extends State<InfoScreen> {
                 style: TextStyle(fontFamily: 'JetBrainsMono', fontSize: 12),
               )),
             ),
-            TextButton.icon(
-              onPressed: _launchURL,
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.black)),
-              icon: Icon(
-                Ionicons.logo_github,
-                color: Colors.white,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton.icon(
+                onPressed: _launchURL,
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                icon: Icon(
+                  Ionicons.logo_github,
+                  color: Colors.white,
+                ),
+                label: Text(
+                  'Github',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
-              label: Text(
-                'Github',
-                style: TextStyle(color: Colors.white),
-              ),
+
+            ]
             ),
             ListTile(
               title: Text(

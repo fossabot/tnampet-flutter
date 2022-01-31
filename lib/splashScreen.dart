@@ -1,8 +1,8 @@
 import 'dart:async';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
-
 import 'mainScreen.dart';
+import 'medicine.dart';
 
 class SplashScreen extends StatefulWidget
 {
@@ -11,13 +11,26 @@ class SplashScreen extends StatefulWidget
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  List<Medicine> medicinelist = [];
+
+  void getMedicinefromAPI() async
+  {
+    MedicineAPI.getCharacters().then((response) {
+      setState(() {
+        Iterable list = json.decode(response.body);
+        medicinelist = list.map((e) => Medicine.fromJson(e)).toList();
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => MainScreen(medicinelist)));
+      });
+    });
+  }
+
+
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => MainScreen()));
-    });
+    getMedicinefromAPI();
   }
 
   @override
