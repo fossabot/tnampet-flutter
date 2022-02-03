@@ -16,43 +16,24 @@ class HomeScreen extends StatefulWidget {
 class _HomeState extends State<HomeScreen> {
   List<Medicine> medicinelist = [];
   TextEditingController editingController = TextEditingController();
-  final duplicateItems = List<String>.generate(10000, (i) => "Item $i");
   var items = [];
-  // bool _isLoading = false;
 
   _HomeState(List<Medicine> medicinelist) {
     this.medicinelist = medicinelist;
-    this.items.addAll(duplicateItems);
+    this.items.addAll(medicinelist);
+    log(medicinelist.elementAt(0).title);
   }
 
-  // void getMedicinefromAPI() async
-  // {
-  //   _isLoading = true;
-  //   MedicineAPI.getCharacters().then((response) {
-  //     setState(() {
-  //       Iterable list = json.decode(response.body);
-  //       medicinelist = list.map((e) => Medicine.fromJson(e)).toList();
-  //       _isLoading = false;
-  //     });
-  //   });
-  // }
-  //
-  // @override
-  // void initState(){
-  //   super.initState();
-  //   log(medicinelist.toString());
-  // }
-
   void filterSearchResults(String query) {
-    List<String> dummySearchList = [];
-    dummySearchList.addAll(duplicateItems);
+    var dummySearchList = [];
+    dummySearchList.addAll(medicinelist);
     if (query.isNotEmpty) {
-      List<String> dummyListData = [];
-      dummySearchList.forEach((item) {
-        if (item.contains(query)) {
+      var dummyListData = [];
+      for (var item in dummySearchList) {
+        if (item.title.toString().toLowerCase().contains(query)) {
           dummyListData.add(item);
         }
-      });
+      }
       setState(() {
         items.clear();
         items.addAll(dummyListData);
@@ -61,15 +42,21 @@ class _HomeState extends State<HomeScreen> {
     } else {
       setState(() {
         items.clear();
-        items.addAll(duplicateItems);
+        items.addAll(medicinelist);
       });
     }
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        backgroundColor: Colors.white38,
-        body: Container(
+  Widget build(BuildContext context) => GestureDetector(
+    onTap: ()
+    {
+      FocusScopeNode currentFocus = FocusScope.of(context);
+      if(!currentFocus.hasPrimaryFocus){
+        currentFocus.unfocus();
+      }
+    },
+    child: Container(
           alignment: Alignment.center,
           child: (medicinelist.isEmpty)
               ? CircularProgressIndicator()
@@ -79,17 +66,20 @@ class _HomeState extends State<HomeScreen> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
+                          autofocus: false,
                           onChanged: (value) {
                             filterSearchResults(value);
                           },
                           controller: editingController,
                           decoration: InputDecoration(
+                              isDense: true,
+                              contentPadding: EdgeInsets.all(4),
                               labelText: "Search",
                               hintText: "Search",
                               prefixIcon: Icon(Icons.search),
                               border: OutlineInputBorder(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(25.0)))),
+                                      BorderRadius.all(Radius.circular(24.0)))),
                         ),
                       ),
                       Expanded(
@@ -98,7 +88,7 @@ class _HomeState extends State<HomeScreen> {
                           itemCount: items.length,
                           itemBuilder: (context, index) {
                             return ListTile(
-                              title: Text('${items[index]}'),
+                              title: Text('${items.elementAt(index).title}'),
                             );
                           },
                           separatorBuilder: (context, index) => Divider(),
