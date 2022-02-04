@@ -18,30 +18,11 @@ class _HomeState extends State<HomeScreen> {
   TextEditingController editingController = TextEditingController();
   final duplicateItems = List<String>.generate(10000, (i) => "Item $i");
   var items = [];
-  // bool _isLoading = false;
 
   _HomeState(List<Medicine> medicinelist) {
     this.medicinelist = medicinelist;
     this.items.addAll(duplicateItems);
   }
-
-  // void getMedicinefromAPI() async
-  // {
-  //   _isLoading = true;
-  //   MedicineAPI.getCharacters().then((response) {
-  //     setState(() {
-  //       Iterable list = json.decode(response.body);
-  //       medicinelist = list.map((e) => Medicine.fromJson(e)).toList();
-  //       _isLoading = false;
-  //     });
-  //   });
-  // }
-  //
-  // @override
-  // void initState(){
-  //   super.initState();
-  //   log(medicinelist.toString());
-  // }
 
   void filterSearchResults(String query) {
     List<String> dummySearchList = [];
