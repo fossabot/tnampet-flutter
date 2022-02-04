@@ -24,6 +24,7 @@ class _InfoState extends State<InfoScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         body: ListView(
+          scrollDirection: Axis.vertical,
           children: [
             Stack(
               overflow: Overflow.visible,
