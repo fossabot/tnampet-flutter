@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'medicine.dart';
@@ -19,6 +20,44 @@ class _DetailScreen extends State<DetailScreen> {
   _DetailScreen(item) {
     this.item = item;
   }
+
+  Widget detailContainer(
+      Color color,
+      IconData icon,
+      String header,
+      String body,
+      ){
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.all(4),
+          decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.all(Radius.circular(20))
+          ),
+          child: Row(
+            children: [
+              Icon(icon,color: Colors.white,),
+              Text(header,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)
+            ],
+          ),
+        ),
+        SizedBox(height: 4,),
+        Container(
+          padding: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+              border: Border.all(
+                  color: color
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(20))
+          ),
+          child: Text(body,style: TextStyle(color: color)),
+        ),
+        SizedBox(height: 8,),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,6 +94,14 @@ class _DetailScreen extends State<DetailScreen> {
                 ),
               ),
             ]),
+            Container(
+              child: Text(item.intro_content, textAlign: TextAlign.justify,),
+            ),
+            SizedBox(height: 16,),
+            detailContainer(Colors.red, Icons.dangerous, item.side_effect, item.side_effect_content),
+            detailContainer(Colors.yellow, Icons.warning, item.warning, item.warning_content),
+            detailContainer(Colors.green, Icons.help, item.usage, item.usage_content)
+
           ]),
     );
   }
