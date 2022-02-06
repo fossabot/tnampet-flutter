@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 import 'medicine.dart';
 
@@ -17,8 +21,49 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreen extends State<DetailScreen> {
   var item;
   var _isfavorite = false;
+  List<Medicine> favoritelist = [];
+  var box;
   _DetailScreen(item) {
     this.item = item;
+  }
+
+  @override
+  void initState()
+  {
+    super.initState();
+    initBox();
+  }
+
+  void initBox() async
+  {
+    this.box = Hive.box('savedata');
+    var data = box.get('medicine') ?? [];
+    if(data.isNotEmpty){
+      Iterable list = json.decode(data);
+      favoritelist = list.map((e) => Medicine.fromJson(e)).toList();
+      favoritelist.sort(
+              (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+      for (var element in favoritelist){
+        if(element.id == item.id) {
+          this._isfavorite = true;
+          continue;
+        }
+      }
+    }
+  }
+
+  void updateBox(var item) async
+  {
+    favoritelist.add(item);
+    var text = json.encode(favoritelist);
+    box.put('medicine', text);
+  }
+
+  void removeBox(var item) async
+  {
+    favoritelist.removeWhere((element) => element.title == item.title);
+    var text = json.encode(favoritelist);
+    box.put('medicine', text);
   }
 
   Widget detailContainer(
@@ -85,7 +130,14 @@ class _DetailScreen extends State<DetailScreen> {
               IconButton(
                 onPressed: () {
                   setState(() {
-                    this._isfavorite = (_isfavorite) ? false : true;
+                    if(_isfavorite){
+                      removeBox(item);
+                      this._isfavorite = false;
+                    }else{
+                      updateBox(item);
+                      this._isfavorite = true;
+                    }
+                    log(favoritelist.toString());
                   });
                 },
                 icon: Icon(
@@ -101,7 +153,6 @@ class _DetailScreen extends State<DetailScreen> {
             detailContainer(Colors.red, Icons.dangerous, item.side_effect, item.side_effect_content),
             detailContainer(Colors.yellow, Icons.warning, item.warning, item.warning_content),
             detailContainer(Colors.green, Icons.help, item.usage, item.usage_content)
-
           ]),
     );
   }

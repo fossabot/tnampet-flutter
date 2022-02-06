@@ -42,7 +42,7 @@ class Medicine
 
 class MedicineAPI
 {
-  static Future getCharacters() {
+  static Future getMedicines() {
     return http.get(Uri.parse("https://medicine-303.herokuapp.com/medicines"));
-}
+  }
 }

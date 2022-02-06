@@ -13,7 +13,7 @@ class _SplashScreenState extends State<SplashScreen> {
   List<Medicine> medicinelist = [];
 
   void getMedicinefromAPI() async {
-    MedicineAPI.getCharacters().then((response) {
+    MedicineAPI.getMedicines().then((response) {
       setState(() {
         Iterable list = json.decode(response.body);
         medicinelist = list.map((e) => Medicine.fromJson(e)).toList();

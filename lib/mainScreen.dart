@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:tnampet/favoriteScreen.dart';
@@ -64,6 +66,10 @@ class _MainPageState extends State<MainScreen> {
           onPageChanged: (index) {
             setState(() {
               navigationIndex = index;
+              FocusScopeNode currentFocus = FocusScope.of(context);
+              if (!currentFocus.hasPrimaryFocus) {
+                currentFocus.unfocus();
+              }
             });
           },
           children: screens.cast()),
@@ -77,6 +83,10 @@ class _MainPageState extends State<MainScreen> {
         items: items,
         onTap: (index) => setState(() {
           this.navigationIndex = index;
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
           pageController.animateToPage(index,
               duration: Duration(milliseconds: 500), curve: Curves.ease);
         }),
