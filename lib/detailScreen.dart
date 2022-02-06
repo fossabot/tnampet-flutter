@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -64,6 +63,11 @@ class _DetailScreen extends State<DetailScreen> {
     favoritelist.removeWhere((element) => element.title == item.title);
     var text = json.encode(favoritelist);
     box.put('medicine', text);
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
   }
 
   Widget detailContainer(
@@ -137,7 +141,6 @@ class _DetailScreen extends State<DetailScreen> {
                       updateBox(item);
                       this._isfavorite = true;
                     }
-                    log(favoritelist.toString());
                   });
                 },
                 icon: Icon(

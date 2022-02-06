@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
+import 'detailScreen.dart';
 import 'medicine.dart';
 
 class FavoriteScreen extends StatefulWidget
@@ -16,6 +17,8 @@ class _FavoriteState extends State<FavoriteScreen>{
 
   var box;
   List<Medicine> favoritelist = [];
+  var items;
+  var item;
 
   @override
   void initState()
@@ -33,11 +36,29 @@ class _FavoriteState extends State<FavoriteScreen>{
       favoritelist = list.map((e) => Medicine.fromJson(e)).toList();
       favoritelist.sort(
               (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+      items = favoritelist;
     }
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: Colors.blue,
+    body: ListView.separated(
+      shrinkWrap: true,
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text('${items.elementAt(index).title}'),
+          onTap: () {
+            setState(() {
+              this.item = items.elementAt(index);
+              Navigator.of(context).push(MaterialPageRoute(builder: (context)=> DetailScreen(item))).then((value) => setState(() {
+
+              }));
+            });
+          },
+        );
+      },
+      separatorBuilder: (context, index) => Divider(),
+    ),
   );
 }
