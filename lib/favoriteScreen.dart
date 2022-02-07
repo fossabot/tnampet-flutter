@@ -33,8 +33,30 @@ class _FavoriteState extends State<FavoriteScreen> {
     }
   }
 
+  void clearBox() async {
+    favoritelist.clear();
+    var text = json.encode(favoritelist);
+    box.put('medicine', text);
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text("ថ្នាំសំខាន់ៗ"),
+          backgroundColor: Colors.orange,
+          actions: [
+            Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      clearBox();
+                    });
+                  },
+                  child: Icon(Icons.clear_all),
+                )),
+          ],
+        ),
         body: ListView.separated(
           shrinkWrap: true,
           itemCount: favoritelist.length,

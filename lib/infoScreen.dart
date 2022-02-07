@@ -23,6 +23,10 @@ class _InfoState extends State<InfoScreen> {
   }
   @override
   Widget build(BuildContext context) => Scaffold(
+      appBar: AppBar(
+        title: Text("ព័ត៌មានអំពីកម្មករអេបនេះ"),
+        backgroundColor: Colors.orange,
+      ),
         body: ListView(
           scrollDirection: Axis.vertical,
           children: [

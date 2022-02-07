@@ -62,9 +62,12 @@ class _HomeState extends State<HomeScreen> with AutomaticKeepAliveClientMixin{
             currentFocus.unfocus();
           }
         },
-        child: Container(
-          alignment: Alignment.center,
-          child: (medicinelist.isEmpty)
+        child: Scaffold(
+          appBar: AppBar(
+        title: Text("ថ្នាំពេទ្យ"),
+        backgroundColor: Colors.orange,
+      ),
+          body: (medicinelist.isEmpty)
               ? Text("Data cannot fetch.",textAlign: TextAlign.center,)
               : Container(
                   child: Column(

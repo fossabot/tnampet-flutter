@@ -57,10 +57,6 @@ class _MainPageState extends State<MainScreen> {
     // TODO: implement build
     return Scaffold(
       extendBody: true,
-      appBar: AppBar(
-        title: Text("ថ្នាំពេទ្យ"),
-        backgroundColor: Colors.orange,
-      ),
       body: PageView(
           controller: pageController,
           onPageChanged: (index) {
