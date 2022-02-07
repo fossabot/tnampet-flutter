@@ -34,13 +34,7 @@ class _InfoState extends State<InfoScreen> {
               overflow: Overflow.visible,
               alignment: Alignment.center,
               children: [
-                FadeInImage.assetNetwork(
-                  height: MediaQuery.of(context).size.height / 3,
-                  fit: BoxFit.cover,
-                  image: 'https://cdn.vox-cdn.com/thumbor/1S7mDgXKPLF7mww1c05QVjaon7w=/1400x788/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/19661987/acastro_190807_3592_best_anime_2019_0001__1_.jpg',
-                  placeholder:'lib/assets/images/cupertino_activity_indicator.gif',
-                  placeholderCacheWidth: 16,
-                  placeholderCacheHeight: 16,),
+                Image.asset('lib/assets/images/cover.jpg'),
                 Positioned(
                   child: CircleAvatar(
                     radius: 60,

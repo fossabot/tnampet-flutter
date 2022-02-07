@@ -46,15 +46,12 @@ class _FavoriteState extends State<FavoriteScreen> {
           backgroundColor: Colors.orange,
           actions: [
             Padding(
-                padding: EdgeInsets.only(right: 20.0),
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      clearBox();
-                    });
-                  },
-                  child: Icon(Icons.clear_all),
-                )),
+                padding: EdgeInsets.only(right: 8.0),
+                child: IconButton(icon: Icon(Icons.clear_all),onPressed:() {
+                  setState(() {
+                    clearBox();
+                  });
+                })),
           ],
         ),
         body: ListView.separated(
