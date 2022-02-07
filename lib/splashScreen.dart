@@ -14,7 +14,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   List<Medicine> medicinelist = [];
-  var _isConnect = false;
 
   void getMedicinefromAPI() async {
     MedicineAPI.getMedicines().then((response) {
@@ -23,8 +22,6 @@ class _SplashScreenState extends State<SplashScreen> {
         medicinelist = list.map((e) => Medicine.fromJson(e)).toList();
         medicinelist.sort(
             (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
-        Fluttertoast.showToast(
-            msg: "Has internet connection.", backgroundColor: Colors.grey);
         saveBox();
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => MainScreen(medicinelist)));
@@ -35,7 +32,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void checkConnection() async {
     bool result = await InternetConnectionChecker().hasConnection;
     if (result == true) {
-      _isConnect = true;
+      Fluttertoast.showToast(
+            msg: "Has internet connection!", backgroundColor: Colors.grey);
       getMedicinefromAPI();
     } else {
       initBox();

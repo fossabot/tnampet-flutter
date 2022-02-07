@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive/hive.dart';
 
 import 'detailScreen.dart';
@@ -47,11 +48,16 @@ class _FavoriteState extends State<FavoriteScreen> {
           actions: [
             Padding(
                 padding: EdgeInsets.only(right: 8.0),
-                child: IconButton(icon: Icon(Icons.clear_all),onPressed:() {
-                  setState(() {
-                    clearBox();
-                  });
-                })),
+                child: IconButton(
+                    icon: Icon(Icons.clear_all),
+                    onPressed: () {
+                      setState(() {
+                        Fluttertoast.showToast(
+                            msg: "Clear all favorites data!",
+                            backgroundColor: Colors.grey);
+                        clearBox();
+                      });
+                    })),
           ],
         ),
         body: ListView.separated(
