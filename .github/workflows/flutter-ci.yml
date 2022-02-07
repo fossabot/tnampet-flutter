@@ -23,8 +23,7 @@ jobs:
                 with:
                         flutter-version: '2.5.3'
         - run: flutter pub get
-        - run: flutter test
-        - run: flutter build apk
+        - run: flutter build apk --no-sound-null-safety
         - run: flutter build appbundle
         - uses: actions/upload-artifact@v1
                 with:
