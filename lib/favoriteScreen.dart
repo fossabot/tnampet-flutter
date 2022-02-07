@@ -6,59 +6,55 @@ import 'package:hive/hive.dart';
 import 'detailScreen.dart';
 import 'medicine.dart';
 
-class FavoriteScreen extends StatefulWidget
-{
+class FavoriteScreen extends StatefulWidget {
   @override
   _FavoriteState createState() => _FavoriteState();
-
 }
 
-class _FavoriteState extends State<FavoriteScreen>{
-
+class _FavoriteState extends State<FavoriteScreen> {
   var box;
   List<Medicine> favoritelist = [];
-  var items;
   var item;
 
   @override
-  void initState()
-  {
+  void initState() {
     super.initState();
     initBox();
   }
 
-  void initBox() async
-  {
+  void initBox() async {
     this.box = Hive.box('savedata');
     var data = box.get('medicine') ?? [];
-    if(data.isNotEmpty){
+    if (data.isNotEmpty) {
       Iterable list = json.decode(data);
       favoritelist = list.map((e) => Medicine.fromJson(e)).toList();
       favoritelist.sort(
-              (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
-      items = favoritelist;
+          (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
     }
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    body: ListView.separated(
-      shrinkWrap: true,
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text('${items.elementAt(index).title}'),
-          onTap: () {
-            setState(() {
-              this.item = items.elementAt(index);
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=> DetailScreen(item))).then((value) => setState(() {
-
-              }));
-            });
+        body: ListView.separated(
+          shrinkWrap: true,
+          itemCount: favoritelist.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text('${favoritelist.elementAt(index).title}'),
+              onTap: () {
+                setState(() {
+                  this.item = favoritelist.elementAt(index);
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(
+                          builder: (context) => DetailScreen(item)))
+                      .then((value) => setState(() {
+                            initBox();
+                          }));
+                });
+              },
+            );
           },
-        );
-      },
-      separatorBuilder: (context, index) => Divider(),
-    ),
-  );
+          separatorBuilder: (context, index) => Divider(),
+        ),
+      );
 }
